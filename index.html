@@ -3,12 +3,20 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Voronoi</title>
+	<title>Sandbox</title>
 	<link rel="stylesheet" href="/css/style.css">
 	<script type="text/javascript" src="/js/paper.js"></script>
 	<script type="text/paperscript" canvas="canvas">
 		var bbox;
 		var oldSize = view.size;
+		var sandbox_margin = 5;
+		var sandbox_length = 100;
+
+		document.onmousemove = function(e){
+			var x = e.pageX;
+			var y = e.pageY;
+			console.log("x:",x,"y:",y);
+		};
 
 		onResize();
 
@@ -28,9 +36,39 @@
 		function renderDiagram() {
 
 			project.activeLayer.children = [];
-			// Create a triangle shaped path 
-			var sandbox_rectangle = new Path.RegularPolygon(view.center, 4, 50);
-			sandbox_rectangle.fillColor = '#00BBDE';
+
+			var center = view.center;
+			var sandbox_length = view.viewSize.height*(0.1);
+			var sandbox_width = view.viewSize.width;
+			var sandbox_slide = sandbox_length*(7/10);
+			var sandbox_parallellogram = [];
+			sandbox_parallellogram[0] = new Path({
+	           closed: true,
+	           segments: [center , center + { x: sandbox_slide, y: sandbox_length} , center + { x: sandbox_length + sandbox_slide, y: sandbox_length} , center + { x: sandbox_length, y: 0} ],
+	           fillColor: '#00BBDE'
+			});
+
+			sandbox_parallellogram[1] = new Path({
+	           closed: true,
+	           segments: [center , center + { x: -sandbox_length, y: 0} , center + { x: -sandbox_length -sandbox_slide, y: sandbox_length} , center + { x: -sandbox_slide, y: sandbox_length} ],
+	           fillColor: '#00BBDE'
+			});
+
+			sandbox_parallellogram[2] = new Path({
+	           closed: true,
+	           segments: [center , center + { x: sandbox_length, y: 0} , center + { x: sandbox_length + sandbox_slide, y: -sandbox_length} , center + { x: sandbox_slide, y: -sandbox_length} ],
+	           fillColor: '#00BBDE'
+			});
+
+			sandbox_parallellogram[3] = new Path({
+	           closed: true,
+	           segments: [center , center + { x: -sandbox_length, y: 0}, center + { x: -sandbox_length -sandbox_slide, y: -sandbox_length}, center + { x: -sandbox_slide, y: -sandbox_length}],
+	           fillColor: '#00BBDE'
+			});
+
+			// sandbox_parallellogram.flatten(4);
+
+			
 
 		}
 
