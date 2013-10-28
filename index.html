@@ -12,11 +12,11 @@
 		var sandbox_margin = 5;
 		var sandbox_length = 100;
 
-		document.onmousemove = function(e){
-			var x = e.pageX;
-			var y = e.pageY;
-			console.log("x:",x,"y:",y);
-		};
+		// document.onmousemove = function(e){
+		// 	var x = e.pageX;
+		// 	var y = e.pageY;
+		// 	console.log("x:",x,"y:",y);
+		// };
 
 		onResize();
 
@@ -41,13 +41,14 @@
 			project.currentStyle = {
 				strokeColor: '#fff',
 				fillColor: '#00BBDE',
-				strokeWidth: 3
+				strokeWidth: 10
 			};
 
 			var center = view.center;
-			var sandbox_length = view.viewSize.height*(0.13);
+			var sandbox_length = view.viewSize.height*(0.15)
 			var sandbox_width = view.viewSize.width;
-			var sandbox_slide = sandbox_length*(3/4);
+			var sandbox_slide = sandbox_length*(0.94090352453);
+			// Sin45
 			// var sandbox_slide = 0;
 			var sandbox_parallellogram = [];
 			//-1,1
@@ -148,6 +149,60 @@
 	           closed: true,
 	           segments: [center + {x: 0 , y: sandbox_length} , center + { x: -sandbox_slide, y: 2*sandbox_length} , center + { x: 0 , y: 3*sandbox_length} , center + { x: sandbox_slide, y: 2*sandbox_length} ]
 			});
+
+			var sandbox_outer_parallellograms = [];
+
+			//down down right
+			sandbox_outer_parallellograms[0] = new Path({
+	           closed: true,
+	           segments: [center + {x: sandbox_slide , y: 2*sandbox_length} , center + { x: sandbox_length + sandbox_slide, y: 2*sandbox_length} , center + { x: sandbox_length , y: 3*sandbox_length} ,center + { x: 0 , y: 3*sandbox_length}]
+			});
+
+			//down down left
+			sandbox_outer_parallellograms[1] = new Path({
+	           closed: true,
+	           segments: [center + {x: -sandbox_slide , y: 2*sandbox_length} , center + { x: -sandbox_length - sandbox_slide, y: 2*sandbox_length} , center + { x: -sandbox_length , y: 3*sandbox_length} ,center + { x: 0 , y: 3*sandbox_length}]
+			});
+
+			//up up left
+			sandbox_outer_parallellograms[2] = new Path({
+	           closed: true,
+	           segments: [center + {x: -sandbox_slide , y: -2*sandbox_length} , center + { x: -sandbox_length - sandbox_slide, y: -2*sandbox_length} , center + { x: -sandbox_length , y: -3*sandbox_length} ,center + { x: 0 , y: -3*sandbox_length}]
+			});
+
+			//up up right
+			sandbox_outer_parallellograms[3] = new Path({
+	           closed: true,
+	           segments: [center + {x: sandbox_slide , y: -2*sandbox_length} , center + { x: sandbox_length + sandbox_slide, y: -2*sandbox_length} , center + { x: sandbox_length, y: -3*sandbox_length} ,center + { x: 0 , y: -3*sandbox_length}]
+			});
+
+
+			//up right
+			sandbox_outer_parallellograms[4] = new Path({
+	           closed: true,
+	           segments: [center + {x: sandbox_slide + sandbox_length , y: -sandbox_length} , center + { x: sandbox_length + sandbox_slide, y: -2*sandbox_length} , center + { x: 2*sandbox_slide + sandbox_length, y: -sandbox_slide} ,center + { x: 2*sandbox_slide + sandbox_length , y: 0}]
+			});
+
+			//down right
+			sandbox_outer_parallellograms[5] = new Path({
+	           closed: true,
+	           segments: [center + {x: sandbox_slide + sandbox_length , y: sandbox_length} , center + { x: sandbox_length + sandbox_slide, y: 2*sandbox_length} , center + { x: 2*sandbox_slide + sandbox_length, y: sandbox_slide} ,center + { x: 2*sandbox_slide + sandbox_length , y: 0}]
+			});
+
+			//down left
+			sandbox_outer_parallellograms[6] = new Path({
+	           closed: true,
+	           segments: [center + {x: -sandbox_slide - sandbox_length , y: sandbox_length} , center + { x: -sandbox_length - sandbox_slide, y: 2*sandbox_length} , center + { x: -2*sandbox_slide - sandbox_length, y: sandbox_slide} ,center + { x: -2*sandbox_slide - sandbox_length , y: 0}]
+			});
+
+			//up left
+			sandbox_outer_parallellograms[6] = new Path({
+	           closed: true,
+	           segments: [center + {x: -sandbox_slide - sandbox_length , y: -sandbox_length} , center + { x: -sandbox_length - sandbox_slide, y: -2*sandbox_length} , center + { x: -2*sandbox_slide - sandbox_length, y: -sandbox_slide} ,center + { x: -2*sandbox_slide - sandbox_length , y: 0}]
+			});
+
+			
+
 		}
 
 		function onResize() {
