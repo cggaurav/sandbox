@@ -6,32 +6,25 @@
 	<title>Sandbox</title>
 	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="js/paper.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 	<script type="text/paperscript" canvas="canvas">
 		var bbox;
 		var oldSize = view.size;
 		var sandbox_margin = 5;
 		var sandbox_length = 100;
-
-		// document.onmousemove = function(e){
-		// 	var x = e.pageX;
-		// 	var y = e.pageY;
-		// 	console.log("x:",x,"y:",y);
-		// };
-
 		onResize();
 
-		// function onMouseDown(event) {
-		// 	sites.push(event.point);
-		// 	renderDiagram();
-		// }
 
-		// function onMouseMove(event) {
-		// 	mousePos = event.point;
-		// 	if (event.count == 0)
-		// 		sites.push(event.point);
-		// 	sites[sites.length - 1] = event.point;
-		// 	renderDiagram();
-		// }
+		function onMouseMove(event) {
+			// Whenever the user moves the mouse, move the path
+			// to that position:
+
+			// event.item.position.x += event.item.bounds.width / 4;
+			// event.item.position.x -= event.item.bounds.width / 2;
+			// event.item.rotate(100);
+
+
+		}
 
 		function renderDiagram() {
 
@@ -41,16 +34,18 @@
 			project.currentStyle = {
 				strokeColor: '#fff',
 				fillColor: '#00BBDE',
-				strokeWidth: 10
+				strokeWidth: 5
 			};
 
 			var center = view.center;
-			var sandbox_length = view.viewSize.height*(0.15)
-			var sandbox_width = view.viewSize.width;
+			var sandbox_length = view.viewSize.height*(0.15);
 			var sandbox_slide = sandbox_length*(0.94090352453);
-			// Sin45
-			// var sandbox_slide = 0;
+
 			var sandbox_parallellogram = [];
+			var sandbox_squares = [];
+			var sandbox_outer_squares = [];
+			var sandbox_outer_parallellograms = [];
+
 			//-1,1
 			sandbox_parallellogram[0] = new Path({
 	           closed: true,
@@ -72,8 +67,6 @@
 	           segments: [center , center + { x: -sandbox_length, y: 0}, center + { x: -sandbox_length -sandbox_slide, y: -sandbox_length}, center + { x: -sandbox_slide, y: -sandbox_length}]
 			});
 
-
-			var sandbox_squares = [];
 
 			// 1,1
 			sandbox_squares[0] = new Path.Rectangle({
@@ -124,7 +117,6 @@
 	           segments: [center , center + { x: sandbox_slide, y: sandbox_length}, center + { x: sandbox_slide, y: 2*sandbox_length}, center + { x: 0, y: sandbox_length}]
 			});
 
-			var sandbox_outer_squares = [];
 
 			// up
 			sandbox_outer_squares[0] = new Path({
@@ -150,7 +142,6 @@
 	           segments: [center + {x: 0 , y: sandbox_length} , center + { x: -sandbox_slide, y: 2*sandbox_length} , center + { x: 0 , y: 3*sandbox_length} , center + { x: sandbox_slide, y: 2*sandbox_length} ]
 			});
 
-			var sandbox_outer_parallellograms = [];
 
 			//down down right
 			sandbox_outer_parallellograms[0] = new Path({
@@ -201,6 +192,8 @@
 	           segments: [center + {x: -sandbox_slide - sandbox_length , y: -sandbox_length} , center + { x: -sandbox_length - sandbox_slide, y: -2*sandbox_length} , center + { x: -2*sandbox_slide - sandbox_length, y: -sandbox_slide} ,center + { x: -2*sandbox_slide - sandbox_length , y: 0}]
 			});
 
+
+			// sandbox_parallellogram
 			
 
 		}
@@ -218,15 +211,46 @@
 			renderDiagram();
 		}
 
-		// function onKeyDown(event) {
-		// 	if (event.key == 'space') {
-		// 		selected = !selected;
-		// 		renderDiagram();
-		// 	}
-		// }
+
+
+		var rotate_count = 0;
+		function onFrame(event) {
+			
+			var count = 24;
+
+			// Run through the active layer's children list and change
+			// the position of the placed symbols:
+			project.currentStyle.fillColor += 10;
+			for (var i = 0; i < count; i++) {
+				var item = project.activeLayer.children[i];
+				
+				// Move the item 1/20th of its width to the right. This way
+				// larger circles move faster than smaller circles:
+				item.flatten(2);
+				item.fillColor.hue += 0.1;
+				rotate_count+=1;
+				if(rotate_count > 1440)
+				{	
+					rotate_count = 0;
+				}
+				if(rotate_count <= 360){
+					item.rotate(1);
+				}
+					
+			}
+
+		}
 	</script>
 </head>
 <body>
+	<!-- TOP RIGHT RIBBON: START COPYING HERE -->
+	    <div class="github-fork-ribbon-wrapper right">
+	        <div class="github-fork-ribbon">
+	            <a href="https://github.com/cggaurav/sandbox">Fork me on GitHub</a>
+	        </div>
+	    </div>
+	<!-- TOP RIGHT RIBBON: END COPYING HERE -->
+	<h1>Sandbox</h1>
 	<canvas id="canvas" resize></canvas>
 </body>
 </html>
