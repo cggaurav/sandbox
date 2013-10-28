@@ -45,7 +45,7 @@
 			};
 
 			var center = view.center;
-			var sandbox_length = view.viewSize.height*(0.1);
+			var sandbox_length = view.viewSize.height*(0.2);
 			var sandbox_width = view.viewSize.width;
 			var sandbox_slide = sandbox_length*(7/10);
 			var sandbox_parallellogram = [];
@@ -95,6 +95,33 @@
 				point: center + {x: sandbox_slide, y:sandbox_length},
 				size: [sandbox_length, sandbox_length]
 			});			
+
+			var sandbox_vertical_parallellograms = [];
+
+			//-1,1
+			sandbox_vertical_parallellograms[0] = new Path({
+	           closed: true,
+	           segments: [center , center + { x: -sandbox_slide, y: -sandbox_length}, center + { x: -sandbox_slide, y: -2*sandbox_length}, center + { x: 0, y: -sandbox_length}]
+			});
+
+			// 1,1
+			sandbox_vertical_parallellograms[1] = new Path({
+	           closed: true,
+	           segments: [center , center + { x: sandbox_slide, y: -sandbox_length}, center + { x: sandbox_slide, y: -2*sandbox_length}, center + { x: 0, y: -sandbox_length}]
+			});
+
+			// -1,-1
+			sandbox_vertical_parallellograms[2] = new Path({
+	           closed: true,
+	           segments: [center , center + { x: -sandbox_slide, y: sandbox_length}, center + { x: -sandbox_slide, y: 2*sandbox_length}, center + { x: 0, y: sandbox_length}]
+			});
+
+			// 1,-1
+			sandbox_vertical_parallellograms[3] = new Path({
+	           closed: true,
+	           segments: [center , center + { x: sandbox_slide, y: sandbox_length}, center + { x: sandbox_slide, y: 2*sandbox_length}, center + { x: 0, y: sandbox_length}]
+			});
+
 
 		}
 
