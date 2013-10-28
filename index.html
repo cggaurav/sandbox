@@ -38,7 +38,7 @@
 			};
 
 			var center = view.center;
-			var sandbox_length = view.viewSize.height*(0.15);
+			var sandbox_length = view.viewSize.height*(0.13);
 			var sandbox_slide = sandbox_length*(0.94090352453);
 
 			var sandbox_parallellogram = [];
@@ -214,29 +214,40 @@
 
 
 		var rotate_count = 0;
+
 		function onFrame(event) {
 			
 			var count = 24;
 
-			// Run through the active layer's children list and change
-			// the position of the placed symbols:
-			project.currentStyle.fillColor += 10;
+			// Handle Hue
 			for (var i = 0; i < count; i++) {
 				var item = project.activeLayer.children[i];
 				
 				// Move the item 1/20th of its width to the right. This way
 				// larger circles move faster than smaller circles:
-				item.flatten(2);
+				item.flatten(1);
 				item.fillColor.hue += 0.1;
-				rotate_count+=1;
-				if(rotate_count > 1440)
-				{	
-					rotate_count = 0;
-				}
-				if(rotate_count <= 360){
-					item.rotate(1);
-				}
+				
 					
+			}
+
+			// Handle rotations
+			if(rotate_count > 360)
+			{	
+				rotate_count = 0;
+			}
+			else
+			{
+				rotate_count+=1;
+
+				for (var i = 0; i < count; i++) {
+					var item = project.activeLayer.children[i];
+				
+					if(rotate_count <= 360){
+						item.rotate(1);
+					}
+						
+				}
 			}
 
 		}
