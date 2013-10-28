@@ -4,8 +4,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Sandbox</title>
-	<link rel="stylesheet" href="/css/style.css">
-	<script type="text/javascript" src="/js/paper.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" src="js/paper.js"></script>
 	<script type="text/paperscript" canvas="canvas">
 		var bbox;
 		var oldSize = view.size;
@@ -37,38 +37,64 @@
 
 			project.activeLayer.children = [];
 
+			// Change the current style of the project:
+			project.currentStyle = {
+				strokeColor: '#000000',
+				fillColor: '#00BBDE',
+				strokeWidth: 1
+			};
+
 			var center = view.center;
 			var sandbox_length = view.viewSize.height*(0.1);
 			var sandbox_width = view.viewSize.width;
 			var sandbox_slide = sandbox_length*(7/10);
 			var sandbox_parallellogram = [];
+			//-1,1
 			sandbox_parallellogram[0] = new Path({
 	           closed: true,
-	           segments: [center , center + { x: sandbox_slide, y: sandbox_length} , center + { x: sandbox_length + sandbox_slide, y: sandbox_length} , center + { x: sandbox_length, y: 0} ],
-	           fillColor: '#00BBDE'
+	           segments: [center , center + { x: sandbox_slide, y: sandbox_length} , center + { x: sandbox_length + sandbox_slide, y: sandbox_length} , center + { x: sandbox_length, y: 0} ]
 			});
-
+			//-1,-1
 			sandbox_parallellogram[1] = new Path({
 	           closed: true,
-	           segments: [center , center + { x: -sandbox_length, y: 0} , center + { x: -sandbox_length -sandbox_slide, y: sandbox_length} , center + { x: -sandbox_slide, y: sandbox_length} ],
-	           fillColor: '#00BBDE'
+	           segments: [center , center + { x: -sandbox_length, y: 0} , center + { x: -sandbox_length -sandbox_slide, y: sandbox_length} , center + { x: -sandbox_slide, y: sandbox_length} ]
 			});
-
+			//1,1
 			sandbox_parallellogram[2] = new Path({
 	           closed: true,
-	           segments: [center , center + { x: sandbox_length, y: 0} , center + { x: sandbox_length + sandbox_slide, y: -sandbox_length} , center + { x: sandbox_slide, y: -sandbox_length} ],
-	           fillColor: '#00BBDE'
+	           segments: [center , center + { x: sandbox_length, y: 0} , center + { x: sandbox_length + sandbox_slide, y: -sandbox_length} , center + { x: sandbox_slide, y: -sandbox_length} ]
 			});
-
+			//-1,1
 			sandbox_parallellogram[3] = new Path({
 	           closed: true,
-	           segments: [center , center + { x: -sandbox_length, y: 0}, center + { x: -sandbox_length -sandbox_slide, y: -sandbox_length}, center + { x: -sandbox_slide, y: -sandbox_length}],
-	           fillColor: '#00BBDE'
+	           segments: [center , center + { x: -sandbox_length, y: 0}, center + { x: -sandbox_length -sandbox_slide, y: -sandbox_length}, center + { x: -sandbox_slide, y: -sandbox_length}]
 			});
 
-			// sandbox_parallellogram.flatten(4);
 
-			
+			var sandbox_squares = [];
+
+			// 1,1
+			sandbox_squares[0] = new Path.Rectangle({
+				point: center + {x:sandbox_slide, y:-2*sandbox_length},
+				size: [sandbox_length, sandbox_length]
+			});			
+
+			// -1,1
+			sandbox_squares[1] = new Path.Rectangle({
+				point: center + {x:-sandbox_length -sandbox_slide, y:-2*sandbox_length},
+				size: [sandbox_length, sandbox_length]
+			});			
+
+			// -1,-1
+			sandbox_squares[2] = new Path.Rectangle({
+				point: center + {x:-sandbox_length -sandbox_slide, y:sandbox_length},
+				size: [sandbox_length, sandbox_length]
+			});			
+
+			sandbox_squares[3] = new Path.Rectangle({
+				point: center + {x: sandbox_slide, y:sandbox_length},
+				size: [sandbox_length, sandbox_length]
+			});			
 
 		}
 
