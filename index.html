@@ -39,15 +39,16 @@
 
 			// Change the current style of the project:
 			project.currentStyle = {
-				strokeColor: '#000000',
+				strokeColor: '#fff',
 				fillColor: '#00BBDE',
-				strokeWidth: 1
+				strokeWidth: 3
 			};
 
 			var center = view.center;
-			var sandbox_length = view.viewSize.height*(0.2);
+			var sandbox_length = view.viewSize.height*(0.13);
 			var sandbox_width = view.viewSize.width;
-			var sandbox_slide = sandbox_length*(7/10);
+			var sandbox_slide = sandbox_length*(3/4);
+			// var sandbox_slide = 0;
 			var sandbox_parallellogram = [];
 			//-1,1
 			sandbox_parallellogram[0] = new Path({
@@ -122,7 +123,31 @@
 	           segments: [center , center + { x: sandbox_slide, y: sandbox_length}, center + { x: sandbox_slide, y: 2*sandbox_length}, center + { x: 0, y: sandbox_length}]
 			});
 
+			var sandbox_outer_squares = [];
 
+			// up
+			sandbox_outer_squares[0] = new Path({
+	           closed: true,
+	           segments: [center + {x: 0 , y: -sandbox_length} , center + { x: sandbox_slide, y: -2*sandbox_length} , center + { x: 0, y: -3*sandbox_length} , center + { x: -sandbox_slide, y: -2*sandbox_length} ]
+			});
+
+			// left
+			sandbox_outer_squares[1] = new Path({
+	           closed: true,
+	           segments: [center + {x: -sandbox_length , y: 0} , center + { x: -sandbox_length - sandbox_slide, y: -sandbox_length} , center + { x: -sandbox_length - 2*sandbox_slide , y: 0} , center + { x: -sandbox_slide -sandbox_length, y: sandbox_length} ]
+			});
+
+			// right
+			sandbox_outer_squares[2] = new Path({
+	           closed: true,
+	           segments: [center + {x: sandbox_length , y: 0} , center + { x: sandbox_length + sandbox_slide, y: -sandbox_length} , center + { x: sandbox_length + 2*sandbox_slide , y: 0} , center + { x: sandbox_slide +sandbox_length, y: sandbox_length} ]
+			});
+
+			// down
+			sandbox_outer_squares[3] = new Path({
+	           closed: true,
+	           segments: [center + {x: 0 , y: sandbox_length} , center + { x: -sandbox_slide, y: 2*sandbox_length} , center + { x: 0 , y: 3*sandbox_length} , center + { x: sandbox_slide, y: 2*sandbox_length} ]
+			});
 		}
 
 		function onResize() {
